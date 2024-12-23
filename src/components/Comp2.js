@@ -14,6 +14,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useRef } from "react";
 import database from "host/database";
+import { buynowState } from "host/hostSlice";
+
 export default function Comp2() {
   const scrollRef = useRef(null);
   const [showLeftIcon, setShowLeftIcon] = useState(false);
@@ -50,6 +52,9 @@ export default function Comp2() {
   }, []);
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+  };
+  const handleBuyNow = (product) => {
+    dispatch(buynowState(product));
   };
   return (
     <Box sx={{ p: 2 }}>
@@ -158,6 +163,7 @@ export default function Comp2() {
                     variant="contained"
                     color="success"
                     sx={{ flex: 1, width: "100%" }}
+                    onClick={() => handleBuyNow(product)}
                   >
                     Buy Now
                   </Button>

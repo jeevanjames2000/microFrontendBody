@@ -13,13 +13,13 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   incrementQuantity,
   decrementQuantity,
   removeFromCart,
 } from "host/cartSlice";
+import { buynowState } from "host/hostSlice";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -37,8 +37,12 @@ export default function CartPage() {
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
   };
+  const handleBuyNow = (product) => {
+    dispatch(buynowState(product));
+  };
+
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ position: "relative", margin: "8rem" }}>
       <ShoppingCartIcon sx={{ mr: 1 }} />
       <Typography variant="h4" sx={{ mb: 2 }}>
         Shopping Cart
@@ -98,9 +102,11 @@ export default function CartPage() {
           </Card>
         ))
       ) : (
-        <Typography variant="h6" color="text.secondary">
-          Your cart is empty.
-        </Typography>
+        <Box sx={{ padding: "3rem" }}>
+          <Typography variant="h6" color="text.secondary">
+            Your cart is empty.
+          </Typography>
+        </Box>
       )}
       <Divider sx={{ my: 2 }} />
       {cart.length > 0 && (
@@ -112,7 +118,12 @@ export default function CartPage() {
           }}
         >
           <Typography variant="h6">Total: ₹{totalValue}</Typography>
-          <Button variant="contained" color="success" size="large">
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            onClick={handleBuyNow(cart)}
+          >
             Proceed to Buy
           </Button>
         </Box>
